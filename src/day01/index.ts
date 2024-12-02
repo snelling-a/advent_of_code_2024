@@ -1,22 +1,16 @@
+import { parseInput } from "../utils/parseInput.ts";
+
 const rawInput = Deno.readTextFileSync("./src/day01/input.txt");
-function parseInput(input: string) {
-  const parsed = input
-    .trim()
-    .split("\n")
-    .reduce<{ left: number[]; right: number[] }>(
-      (acc, line) => {
-        const [a, b] = line.split(/\s+/);
-        acc.left.push(parseInt(a));
-        acc.right.push(parseInt(b));
-        return acc;
-      },
-      { left: [], right: [] },
-    );
 
-  return { left: parsed.left.sort(), right: parsed.right.sort() };
-}
-
-const input = parseInput(rawInput);
+const input = parseInput(rawInput).reduce<{ left: number[]; right: number[] }>(
+  (acc, line) => {
+    const [a, b] = line.split(/\s+/);
+    acc.left.push(parseInt(a));
+    acc.right.push(parseInt(b));
+    return acc;
+  },
+  { left: [], right: [] },
+);
 
 export function part1() {
   const { left, right } = input;
