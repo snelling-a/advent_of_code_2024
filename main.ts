@@ -1,4 +1,4 @@
-import { part1, part2 } from "./src/day01/index.ts";
+import { part1, part2 } from "./src/day02/index.ts";
 
 const solution1 = part1();
 const solution2 = part2();
