@@ -1,6 +1,11 @@
-import { part1, part2 } from "./src/day02/index.ts";
+import { part1, part2 } from "./src/day03/index.ts";
 
-const solution1 = part1();
-const solution2 = part2();
+const newLocal = part1();
+const newLocal_1 = part2();
 
-console.log({ solution1, solution2 });
+const solution = `
+part1: ${newLocal}
+${newLocal_1 ? `-----\npart2: ${newLocal_1}` : ""}
+`;
+
+console.log(solution);
