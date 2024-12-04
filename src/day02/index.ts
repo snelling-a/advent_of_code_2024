@@ -1,18 +1,20 @@
+import * as path from "https://deno.land/std@0.188.0/path/mod.ts";
 import { parseInput } from "../utils/parseInput.ts";
 
-const rawInput = Deno.readTextFileSync("./src/day02/input.txt");
+const __dirname = path.dirname(path.fromFileUrl(import.meta.url));
 
-const parsed = parseInput(rawInput);
-const input = parsed.map((report) => report.split(/\s+/).map(Number));
+const rawInput = Deno.readTextFileSync(`${__dirname}/input.txt`);
+const parsedInput = parseInput(rawInput).map((report) =>
+  report.split(/\s+/).map(Number),
+);
 
-function isReportSafePt1(report: number[]) {
+function isReportSafePt1(report: number[]): boolean {
   let safe = report.length > 0;
   const isIncreasing = report.slice(1).every((n, i) => n >= report[i]);
   const isDecreasing = report.slice(1).every((n, i) => n <= report[i]);
 
   if (!isIncreasing && !isDecreasing) {
-    safe = false;
-    return;
+    return false;
   }
 
   report.slice(1).forEach((n, i) => {
@@ -27,11 +29,11 @@ function isReportSafePt1(report: number[]) {
   return safe;
 }
 
-function getNewReport(report: number[], index: number) {
+function getNewReport(report: number[], index: number): number[] {
   return report.slice(0, index).concat(report.slice(index + 1));
 }
 
-function isReportSafePt2(report: number[]) {
+function isReportSafePt2(report: number[]): boolean {
   if (isReportSafePt1(report)) {
     return true;
   }
@@ -42,18 +44,16 @@ function isReportSafePt2(report: number[]) {
       return true;
     }
   }
+
+  return false;
 }
 
-/**
- * 631
- */
-export function part1() {
-  return input.filter(isReportSafePt1).length;
+/** Your puzzle answer was 631. */
+export function part1(): number {
+  return parsedInput.filter(isReportSafePt1).length;
 }
 
-/**
- * 665
- */
-export function part2() {
-  return input.filter(isReportSafePt2).length;
+/** Your puzzle answer was 665. */
+export function part2(): number {
+  return parsedInput.filter(isReportSafePt2).length;
 }
