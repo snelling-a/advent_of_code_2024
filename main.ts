@@ -1,18 +1,29 @@
+import { readJson, writeJson } from "https://deno.land/x/jsonfile@1.0.0/mod.ts";
 type Part = { solution: number; time: number };
+type DayKey = `day${number}`;
 
-const days: string[] = [];
+const cacheFilePath = "./cache.json";
+
+let cache: { [key: DayKey]: { part1: Part; part2: Part } } = {};
+try {
+  cache = (await readJson(cacheFilePath)) as typeof cache;
+} catch (err) {
+  if (!(err instanceof Deno.errors.NotFound)) {
+    throw err;
+  }
+}
+
+const days: DayKey[] = [];
 
 for await (const { name, isDirectory } of Deno.readDir("./src")) {
   if (!name.match(/day(0[1-9]|1[0-9]|2[0-5])/) || !isDirectory) {
     continue;
   }
 
-  days.push(name);
+  days.push(name as DayKey);
 }
 
-async function checkFileExists(
-  path: string,
-): Promise<Deno.FileInfo | undefined> {
+async function getFile(path: string): Promise<Deno.FileInfo | undefined> {
   try {
     return await Deno.lstat(path);
   } catch (err) {
@@ -34,32 +45,49 @@ function getTimeString(time: number | string): string {
   return `${time.toFixed(2)} ms`;
 }
 
-function runPart(part: () => number): Part {
-  const perfStart = performance.now();
-  const solution = part();
-  const perfEnd = performance.now();
-
-  return { solution, time: perfEnd - perfStart };
-}
+const lastDay = days.sort().slice(-1)[0];
 
 for (const day of days.sort()) {
   const path = `./src/${day}/index.ts`;
 
-  if (!(await checkFileExists(path))) {
+  const file = await getFile(path);
+
+  const cachedDay = cache[day];
+  const isLastDay = day === lastDay;
+
+  if (!file || (!isLastDay && cachedDay)) {
     continue;
   }
 
   const { part1: one, part2: two } = await import(path);
 
-  if (!one()) {
-    continue;
+  const runPart = (part: () => number): Part => {
+    const perfStart = performance.now();
+    const solution = part();
+    const perfEnd = performance.now();
+
+    return { solution, time: perfEnd - perfStart };
+  };
+
+  let part1, part2;
+
+  console.log({ [day]: cachedDay });
+
+  if (isLastDay || !cachedDay) {
+    part1 = runPart(one);
+    part2 = runPart(two);
+    cache[day] = { part1, part2 };
+  } else if (cachedDay) {
+    part1 = cache[day].part1;
+    part2 = cache[day].part2;
+  } else {
+    part1 = { solution: "No cached solution", time: 0 };
+    part2 = { solution: "No cached solution", time: 0 };
   }
+}
 
+for (const [day, { part1, part2 }] of Object.entries(cache)) {
   const dayTitle = `Day ${day.replace(/[^\d]+/, "")}`;
-
-  const part1 = runPart(one);
-  const part2 = runPart(two);
-
   const separator = "-".repeat(15);
   const icons = "󰏏  󰐅  󰏐";
 
@@ -76,3 +104,5 @@ for (const day of days.sort()) {
     ["Total Time"]: getTimeString(part1.time + part2.time),
   });
 }
+
+await writeJson(cacheFilePath, cache, { spaces: 2 });
