@@ -71,8 +71,6 @@ for (const day of days.sort()) {
 
   let part1, part2;
 
-  console.log({ [day]: cachedDay });
-
   if (isLastDay || !cachedDay) {
     part1 = runPart(one);
     part2 = runPart(two);
