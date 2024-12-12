@@ -1,0 +1,14 @@
+export const rawSampleInput = `RRRRIICCFF
+RRRRIICCCF
+VVRRRCCFFF
+VVRCCCJFFF
+VVVVCJJCFE
+VVIVCCJJEE
+VVIIICJJEE
+MIIIIIJJEE
+MIIISIJEEE
+MMMISSJEEE`;
+export const sampleSolutions = {
+  part1: 1930,
+  part2: 1206,
+} as const;
