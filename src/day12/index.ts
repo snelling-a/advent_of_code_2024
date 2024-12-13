@@ -1,6 +1,7 @@
 import * as path from "https://deno.land/std@0.188.0/path/mod.ts";
 import { rawSampleInput, sampleSolutions } from "./sampleInput.ts";
 import { parseInput as _parseInput } from "../utils/parseInput.ts";
+import { directions } from "../utils/constants.ts";
 
 const __dirname = path.dirname(path.fromFileUrl(import.meta.url));
 
@@ -19,15 +20,6 @@ function findRegions(grid: string[][]): { area: number; perimeter: number }[] {
   const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
   const regions: { area: number; perimeter: number }[] = [];
 
-  // Directions for neighbors: up, right, down, left
-  const directions = [
-    [-1, 0], // Up
-    [0, 1], // Right
-    [1, 0], // Down
-    [0, -1], // Left
-  ];
-
-  // Helper function for flood-fill
   function floodFill(
     startRow: number,
     startCol: number,
@@ -57,10 +49,8 @@ function findRegions(grid: string[][]): { area: number; perimeter: number }[] {
           neighborCol >= cols ||
           grid[neighborRow][neighborCol] !== type
         ) {
-          // Out of bounds or different plant type contributes to perimeter
           perimeter++;
         } else if (!visited[neighborRow][neighborCol]) {
-          // Unvisited neighbor of the same type
           stack.push([neighborRow, neighborCol]);
         }
       }
@@ -69,7 +59,6 @@ function findRegions(grid: string[][]): { area: number; perimeter: number }[] {
     return { area, perimeter };
   }
 
-  // Main loop to find regions
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       if (!visited[row][col]) {
@@ -81,7 +70,6 @@ function findRegions(grid: string[][]): { area: number; perimeter: number }[] {
   return regions;
 }
 
-// Example usage:
 function calculateTotalCost(
   regions: { area: number; perimeter: number }[],
 ): number {

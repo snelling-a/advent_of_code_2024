@@ -1,5 +1,6 @@
 import * as path from "https://deno.land/std@0.188.0/path/mod.ts";
 import { parseInput } from "../utils/parseInput.ts";
+import { directions } from "../utils/constants.ts";
 
 const __dirname = path.dirname(path.fromFileUrl(import.meta.url));
 
@@ -27,16 +28,7 @@ function searchWord(x: number, y: number, dirX: number, dirY: number): boolean {
 }
 
 function countOccurrences(): number {
-  const xmasDirections = [
-    [0, 1],
-    [1, 0],
-    [1, 1],
-    [1, -1],
-    [0, -1],
-    [-1, 0],
-    [-1, -1],
-    [-1, 1],
-  ];
+  const xmasDirections = [...directions, [-1, -1], [-1, 1], [1, -1], [1, 1]];
 
   let count = 0;
   for (let x = 0; x < gridHeight; x++) {

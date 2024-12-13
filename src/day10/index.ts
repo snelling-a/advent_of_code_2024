@@ -1,6 +1,7 @@
 import * as path from "https://deno.land/std@0.188.0/path/mod.ts";
 import { parseInput as _parseInput } from "../utils/parseInput.ts";
 import { rawSampleInput, sampleSolutions } from "./sampleInput.ts";
+import { directions } from "../utils/constants.ts";
 
 const __dirname = path.dirname(path.fromFileUrl(import.meta.url));
 
@@ -12,13 +13,6 @@ type ParsedInput = ReturnType<typeof parseInput>;
 
 const parsedInput: ParsedInput = parseInput(rawInput);
 const parsedSampleInput: ParsedInput = parseInput(rawSampleInput);
-
-const directions = [
-  [0, 1],
-  [1, 0],
-  [0, -1],
-  [-1, 0],
-];
 
 function isValidMove(
   x: number,
