@@ -1,10 +1,7 @@
-import * as path from "https://deno.land/std@0.188.0/path/mod.ts";
 import { rawSampleInput, sampleSolutions } from "./sampleInput.ts";
 import { parseInput as _parseInput } from "../utils/parseInput.ts";
 
-const __dirname = path.dirname(path.fromFileUrl(import.meta.url));
-
-const rawInput = Deno.readTextFileSync(`${__dirname}/input.txt`);
+const rawInput = Deno.readTextFileSync(`${import.meta.dirname}/input.txt`);
 function parseInput(input: string) {
   return _parseInput(input).map((line) => {
     const [p, v] = line.split(" ");

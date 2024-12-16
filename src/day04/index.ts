@@ -1,10 +1,7 @@
-import * as path from "https://deno.land/std@0.188.0/path/mod.ts";
 import { parseInput } from "../utils/parseInput.ts";
 import { directions } from "../utils/constants.ts";
 
-const __dirname = path.dirname(path.fromFileUrl(import.meta.url));
-
-const rawInput = Deno.readTextFileSync(`${__dirname}/input.txt`);
+const rawInput = Deno.readTextFileSync(`${import.meta.dirname}/input.txt`);
 const parsedInput = parseInput(rawInput).map((line) => line.split(""));
 
 const gridHeight = parsedInput.length;
