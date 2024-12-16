@@ -4,7 +4,7 @@ const rawInput = Deno.readTextFileSync(`${import.meta.dirname}/input.txt`);
 const [rawPageOrderingRules, rawUpdates] = rawInput.split("\n\n");
 
 const parsedPageOrderingRules = parseInput(rawPageOrderingRules).map((rule) =>
-  rule.split(/\|/).map(Number),
+  rule.split(/\|/).map(Number)
 ) as [number, number][];
 
 const rulesMap = new Map<number, Set<number>>();
@@ -17,7 +17,7 @@ for (const [before, after] of parsedPageOrderingRules) {
 }
 
 const parsedUpdates = parseInput(rawUpdates).map((update) =>
-  update.split(/,/).map(Number),
+  update.split(/,/).map(Number)
 ) as [number, number][];
 
 function isUpdateValid(

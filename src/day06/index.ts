@@ -84,13 +84,11 @@ function simulatePatrol(
     const nextX = x + directions[direction].dx;
     const nextY = y + directions[direction].dy;
 
-    const isOutOfBounds =
-      nextY < 0 ||
+    const isOutOfBounds = nextY < 0 ||
       nextX < 0 ||
       nextY >= parsedInput.length ||
       nextX >= parsedInput[nextY].length;
-    const isObstacle =
-      (nextX === obstacleX && nextY === obstacleY) ||
+    const isObstacle = (nextX === obstacleX && nextY === obstacleY) ||
       parsedInput[nextY]?.[nextX] === "#";
 
     if (isOutOfBounds) {

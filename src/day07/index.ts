@@ -62,7 +62,7 @@ function sumValidTestValues(operators = baseOperators) {
       numbers.reduce(
         (expr, num, idx) => expr + (idx > 0 ? opCombo[idx - 1] : "") + num,
         "",
-      ),
+      )
     );
     if (expressions.some((expr) => evaluateExpression(expr) === testValue)) {
       sum += testValue;

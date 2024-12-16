@@ -2,7 +2,7 @@ import { parseInput } from "../utils/parseInput.ts";
 
 const rawInput = Deno.readTextFileSync(`${import.meta.dirname}/input.txt`);
 const parsedInput = parseInput(rawInput).map((report) =>
-  report.split(/\s+/).map(Number),
+  report.split(/\s+/).map(Number)
 );
 
 function isReportSafePt1(report: number[]): boolean {

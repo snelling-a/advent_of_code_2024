@@ -43,7 +43,7 @@ function runSimulation(
 
   for (let i = 0; i < 100; i++) {
     currentRobots = currentRobots.map((robot) =>
-      moveRobot(robot, gridWidth, gridHeight),
+      moveRobot(robot, gridWidth, gridHeight)
     );
   }
 

@@ -49,8 +49,9 @@ function calculateTrailheadScores(map: ParsedInput) {
 
   return traverseTrailheads(map, (startX: number, startY: number) => {
     const queue: [number, number][] = [[startX, startY]];
-    const visited = Array.from({ length: gridHeight }, () =>
-      Array(gridWidth).fill(false),
+    const visited = Array.from(
+      { length: gridHeight },
+      () => Array(gridWidth).fill(false),
     );
     visited[startX][startY] = true;
 
